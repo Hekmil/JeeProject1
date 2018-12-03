@@ -52,20 +52,33 @@ public class JDBC {
             statement = connexion.createStatement();
             //messages.add("Objet requête créé !");
 
+            // Exécution d'une requête de lecture 
+            ResultSet nextId = statement.executeQuery("SELECT max(id)+1 max_id FROM users");
+            int i = 1;
+            if (nextId.next() && nextId.getInt("max_id") != 0) {
+                i = nextId.getInt("max_id");
+            }
+            
             // Ajout des users
-           /* statement.executeUpdate(
-                    "INSERT INTO users VALUES (" + l.get(0) + "," + l.get(1) + "," + l.get(2) + ")"
-            );*/
+            for (int n = 0; n < l.size(); n++ ) {
+                statement.executeUpdate(
+                        "INSERT INTO users VALUES ("
+                        + i + ",'"
+                        + l.get(n)[0] + "','"
+                        + l.get(n)[1] + "','"
+                        + l.get(n)[2] + "')"
+                );
+                i++;
+            }
 
             // Exécution d'une requête de lecture 
             resultat = statement.executeQuery("SELECT first_name, last_name, login FROM users");
-            //messages.add("Requête \"SELECT ssn, result FROM bonus;\" effectuée !");
+            
             /* Récupération des données du résultat de la requête de lecture */
-
             while (resultat.next()) {
-                int firstName = resultat.getInt("first_name");
-                int lastName = resultat.getInt("last_name");
-                int login = resultat.getInt("login");
+                String firstName = resultat.getString("first_name");
+                String lastName = resultat.getString("last_name");
+                String login = resultat.getString("login");
 
                 /* Formatage des données pour affichage dans la JSP finale. */
                 messages.add(
@@ -99,7 +112,6 @@ public class JDBC {
                 }
             }
         }
-
         return messages;
     }
 }

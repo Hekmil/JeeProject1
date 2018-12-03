@@ -29,24 +29,26 @@ public class Servlet extends HttpServlet {
 
         Enumeration parameters = request.getParameterNames();
 
-        ArrayList<String[]> l = new ArrayList<String[]>();
-        String[] tab = new String[3];
+        ArrayList<String[]> l = new ArrayList<>(); // User
+        String[] tab = new String[3]; // Data
         int n = 0;
+
         while (parameters.hasMoreElements()) {
 
             n++;
             String nomParam = (String) parameters.nextElement();
             String valeurParam = request.getParameter(nomParam);
-
-            if (n == 1) {
-                tab[0] = valeurParam;
-            } else if (n == 2) {
-                tab[1] = valeurParam;
-            } else {
-                tab[2] = valeurParam;
-                l.add(tab);
-                tab = new String[3];
-                n = 0;
+            if (!request.getParameter(nomParam).equals("")) {
+                if (n == 1) {
+                    tab[0] = valeurParam;
+                } else if (n == 2) {
+                    tab[1] = valeurParam;
+                } else {
+                    tab[2] = valeurParam;
+                    l.add(tab);
+                    tab = new String[3];
+                    n = 0;
+                }
             }
         }
         /* Initialisation de l'objet Java et récupération des messages */
