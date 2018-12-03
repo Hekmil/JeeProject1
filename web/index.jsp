@@ -11,7 +11,6 @@ and open the template in the editor.
         <title>JEE project 1</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
@@ -25,7 +24,7 @@ and open the template in the editor.
                 <tr>
                     <th>First name</th>
                     <th>Last name</th>
-                    <th>login</th>
+                    <th>Login (user name)</th>
                     <th>Delete this line</th>
                 </tr>
                 <c:forEach var="i" begin="0" end="3" step="1">
@@ -34,13 +33,13 @@ and open the template in the editor.
                             <input type="text" name="first${i}" placeholder="First name" size="30" maxlength="20" />
                         </td>
                         <td>
-                            <input type="text" name="last${i}" placeholder="last name" size="30" maxlength="20" />
+                            <input type="text" name="last${i}" placeholder="Last name" size="30" maxlength="20" />
                         </td>
                         <td>
-                            <input type="text" name="login${i}" placeholder="Login (user name)" size="30" maxlength="20" />
+                            <input type="text" name="login${i}" placeholder="User name" size="30" maxlength="20" />
                         </td>
                         <td style="text-align: center;">
-                            <button id ="del" type='reset'>&#x274C;</button>
+                            <button id ="del" onclick="clear(i);" type="reset" >&#x274C;</button>
                         </td>
                     </tr>
                 </c:forEach>
@@ -49,7 +48,11 @@ and open the template in the editor.
         </FORM>
 
         <script language="javascript">
-
+            function clear(i) {
+                document.getElementById("login" + i).value = "";
+                document.getElementById("last" + i).value = "";
+                document.getElementById("login" + i).value = "";
+            }
         </script>
     </body>
 </html>
