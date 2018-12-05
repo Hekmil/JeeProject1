@@ -55,13 +55,10 @@ public class Servlet extends HttpServlet {
         JDBC jdbc = new JDBC(l);
 
         List<String> messages = jdbc.executerTests(request);
-
         /* Enregistrement de la liste des messages dans l'objet requête */
         request.setAttribute(ATT_MESSAGES, messages);
-
         /* Transmission vers la page en charge de l'affichage des résultats */
         this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
-
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

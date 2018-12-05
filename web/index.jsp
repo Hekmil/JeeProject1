@@ -11,16 +11,14 @@ and open the template in the editor.
         <title>JEE project 1</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
 
-        <form METHOD="GET" class="form1"
-              ACTION="http://localhost:8080/project1/Servlet">
+        <form method="post" class="form1" action="http://localhost:8080/project1/Servlet">
 
             <table>
                 <caption><h2><b>Input new user(s)</b></h2></caption>
-
                 <tr>
                     <th>First name</th>
                     <th>Last name</th>
@@ -39,13 +37,26 @@ and open the template in the editor.
                             <input type="text" name="login${i}" placeholder="User name" size="30" maxlength="20" />
                         </td>
                         <td style="text-align: center;">
-                            <button id ="del" onclick="clear(i);" type="reset" >&#x274C;</button>
+                            <button id="del" onclick="clear(i);" type="reset">&#x274C;</button>
                         </td>
                     </tr>
                 </c:forEach>
             </table>
             <INPUT type="submit"> 
-        </FORM>
+        </form>
+
+        <form method="post" class="form2" > 
+            <div style="margin-left : 200px"><h2><b>Search for user</b></h2></div>
+            <select id="selectSearch" >
+                <option value="*">All names</option>
+                <option value="id">ID</option>
+                <option value="first_name">First name</option>      
+                <option value="last_name">Last name</option> 
+                <option value="login">Login</option>
+            </select>
+            <input type="text" name="inputSearch" size="50"/>
+            <button type="submit">Search</button>
+        </form>
 
         <script language="javascript">
             function clear(i) {

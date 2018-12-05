@@ -20,13 +20,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class JDBC {
 
-    private ArrayList<String[]> l = new ArrayList<String[]>();
+    private ArrayList<String[]> l = new ArrayList<>();
 
     public JDBC(ArrayList<String[]> l) {
         this.l = l;
     }
 
-    private List<String> messages = new ArrayList<String>();
+    private List<String> messages = new ArrayList<>();
 
     public List<String> executerTests(HttpServletRequest request) {
         try {
@@ -58,12 +58,12 @@ public class JDBC {
             if (nextId.next() && nextId.getInt("max_id") != 0) {
                 i = nextId.getInt("max_id");
             }
-            
+
             // Ajout des users
-            for (int n = 0; n < l.size(); n++ ) {
+            for (int n = 0; n < l.size(); n++) {
                 statement.executeUpdate(
-                        "INSERT INTO users VALUES ("
-                        + i + ",'"
+                        "INSERT INTO users VALUES ('"
+                        + i + "','"
                         + l.get(n)[0] + "','"
                         + l.get(n)[1] + "','"
                         + l.get(n)[2] + "')"
@@ -71,19 +71,18 @@ public class JDBC {
                 i++;
             }
 
-            // Exécution d'une requête de lecture 
-            resultat = statement.executeQuery("SELECT first_name, last_name, login FROM users");
-            
-            /* Récupération des données du résultat de la requête de lecture */
+            resultat = statement.executeQuery("SELECT id, first_name, last_name, login FROM users");
+
             while (resultat.next()) {
+                String id = resultat.getString("id");
                 String firstName = resultat.getString("first_name");
                 String lastName = resultat.getString("last_name");
                 String login = resultat.getString("login");
 
-                /* Formatage des données pour affichage dans la JSP finale. */
-                messages.add(
-                        "ssn = " + firstName + ", result = " + lastName + "." + login
-                );
+                messages.add(id);
+                messages.add(firstName);
+                messages.add(lastName);
+                messages.add(login);
             }
         } catch (SQLException e) {
             messages.add("Erreur lors de la connexion : <br/>"
