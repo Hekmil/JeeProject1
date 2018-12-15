@@ -42,7 +42,7 @@ and open the template in the editor.
                     </tr>
                 </c:forEach>
             </table>
-            <INPUT type="submit"> 
+            <input type="submit"> 
         </form>
 
         <form method="post" class="form2" > 

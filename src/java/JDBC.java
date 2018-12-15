@@ -26,31 +26,28 @@ public class JDBC {
         this.l = l;
     }
 
-    private List<String> messages = new ArrayList<>();
+    private ArrayList<User> messages = new ArrayList<>();
 
-    public List<String> executerTests(HttpServletRequest request) {
+    public ArrayList<User> executerTests(HttpServletRequest request) {
         try {
             //messages.add("Chargement du driver...");
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             //messages.add("Driver chargé !");
         } catch (ClassNotFoundException e) {
-            messages.add("Erreur lors du chargement : le driver n'a pas été trouvé dans le classpath ! <br/>"
+            System.out.println("Erreur lors du chargement : le driver n'a pas été trouvé dans le classpath ! <br/>"
                     + e.getMessage());
         }
-        String url = "jdbc:derby://localhost:1527/project1Users";
+        String url = "jdbc:derby://localhost:1527/project1";
         String utilisateur = "root";
         String motDePasse = "root";
         Connection connexion = null;
         Statement statement = null;
         ResultSet resultat = null;
         try {
-            //messages.add("Connexion à la base de données...");
             connexion = DriverManager.getConnection(url, utilisateur, motDePasse);
-            //messages.add("Connexion réussie !");
 
             /* Création de l'objet gérant les requêtes */
             statement = connexion.createStatement();
-            //messages.add("Objet requête créé !");
 
             // Exécution d'une requête de lecture 
             ResultSet nextId = statement.executeQuery("SELECT max(id)+1 max_id FROM users");
@@ -74,21 +71,17 @@ public class JDBC {
             resultat = statement.executeQuery("SELECT id, first_name, last_name, login FROM users");
 
             while (resultat.next()) {
-                String id = resultat.getString("id");
-                String firstName = resultat.getString("first_name");
-                String lastName = resultat.getString("last_name");
-                String login = resultat.getString("login");
-
-                messages.add(id);
-                messages.add(firstName);
-                messages.add(lastName);
-                messages.add(login);
+                User u = new User();
+                u.setId(resultat.getString("id"));
+                u.setFirst_name(resultat.getString("first_name"));
+                u.setLast_name(resultat.getString("last_name"));
+                u.setLogin(resultat.getString("login"));
+                messages.add(u);
             }
         } catch (SQLException e) {
-            messages.add("Erreur lors de la connexion : <br/>"
+            System.out.println("Erreur lors de la connexion : <br/>"
                     + e.getMessage());
         } finally {
-            //messages.add("Fermeture de l'objet ResultSet.");
             if (resultat != null) {
                 try {
                     resultat.close();
@@ -96,14 +89,12 @@ public class JDBC {
                 }
             }
 
-            //messages.add("Fermeture de l'objet Statement.");
             if (statement != null) {
                 try {
                     statement.close();
                 } catch (SQLException ignore) {
                 }
             }
-            //messages.add("Fermeture de l'objet Connection.");
             if (connexion != null) {
                 try {
                     connexion.close();

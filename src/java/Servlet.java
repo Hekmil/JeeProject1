@@ -53,8 +53,8 @@ public class Servlet extends HttpServlet {
         }
         /* Initialisation de l'objet Java et récupération des messages */
         JDBC jdbc = new JDBC(l);
-
-        List<String> messages = jdbc.executerTests(request);
+        
+        List<User> messages = jdbc.executerTests(request);
         /* Enregistrement de la liste des messages dans l'objet requête */
         request.setAttribute(ATT_MESSAGES, messages);
         /* Transmission vers la page en charge de l'affichage des résultats */
