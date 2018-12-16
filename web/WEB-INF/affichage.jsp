@@ -17,7 +17,7 @@
     </head>
     <body>
         <h1>Show all users</h1>
-        
+
         <table>
             <caption><h2>Total user count : ${fn:length(messages)}</h2></caption>
             <tr>
@@ -35,5 +35,10 @@
                 </tr>
             </c:forEach>
         </table>
+        <br>
+        <h4>JEE projet 1 - Réalisé par :</h4>
+        Fonteneau Clément<br>
+        Fauvel Anthony<br>
+        Poisson Jérémie     
     </body>
 </HTML>

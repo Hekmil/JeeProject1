@@ -15,10 +15,10 @@ and open the template in the editor.
     </head>
     <body>
 
-        <form method="post" class="form1" action="http://localhost:8080/JeeProject1/Servlet">
+        <form method="post" class="form1" action="http://localhost:8080/project1/Servlet">
 
             <table id="tableau1">
-                <caption><h2><b>Input new user(s)</b></h2></caption>
+                <caption><h2><b id="demo">Input new user(s)</b></h2></caption>
                 <tr>
                     <th>First name</th>
                     <th>Last name</th>
@@ -28,16 +28,16 @@ and open the template in the editor.
                 <c:forEach var="i" begin="0" end="3" step="1">
                     <tr>
                         <td>
-                            <input type="text" name="first${i}" placeholder="First name" size="30" maxlength="20" />
+                            <input type="text" name="first${i}" id="first${i}" placeholder="First name" size="30" maxlength="20" />
                         </td>
                         <td>
-                            <input type="text" name="last${i}" placeholder="Last name" size="30" maxlength="20" />
+                            <input type="text" name="last${i}" id="last${i}" placeholder="Last name" size="30" maxlength="20" />
                         </td>
                         <td>
-                            <input type="text" name="login${i}" placeholder="User name" size="30" maxlength="20" />
+                            <input type="text" name="login${i}" id="login${i}" placeholder="User name" size="30" maxlength="20" />
                         </td>
                         <td style="text-align: center;">
-                            <button id="del" onclick="delLine(${i});" type="button">&#x274C;</button>
+                            <button id="del" onclick="delLine(${i})" type="button">&#x274C;</button>
                         </td>
                     </tr>
                 </c:forEach>
@@ -45,28 +45,31 @@ and open the template in the editor.
             <input type="submit"> 
         </form>
 
-        <form method="post" class="form2" action="http://localhost:8080/JeeProject1/Servlet"> 
+        <form method="post" class="form2" action="http://localhost:8080/project1/Servlet"> 
             <div style="margin-left : 200px"><h2><b>Search for user</b></h2></div>
-            
+
             <table><tr>
-                        <td><select id="selectSearch" name="selectSearch">
-                                <option value="*">All names</option>
-                                <option value="first_name">First name</option>      
-                                <option value="last_name">Last name</option> 
-                                <option value="login">Login</option>
+                    <td><select id="selectSearch" name="selectSearch">
+                            <option value="*">All names</option>
+                            <option value="first_name">First name</option>      
+                            <option value="last_name">Last name</option> 
+                            <option value="login">Login</option>
                         </select></td>
-                        <td><input type="text" name="inputSearch" size="50"/></td>
-                        <td><button type="submit">Search</button></td>
-            </tr></table>
+                    <td><input type="text" name="inputSearch" size="50"/></td>
+                    <td><button type="submit">Search</button></td>
+                </tr></table>
         </form>
+        <br>
+        <h4>JEE projet 1 - Réalisé par :</h4>
+            Fonteneau Clément<br>
+            Fauvel Anthony<br>
+            Poisson Jérémie            
 
         <script language="javascript">
             function delLine(i) {
-                //
-                document.getElementById("tableau1").deleteRow(i+1);
-                //document.getElementById("last" + i).value = "";
-               // document.getElementById("login" + i).value = "";
-            }
+                document.getElementById("first" + i).value = "";
+                document.getElementById("last" + i).value = "";
+                document.getElementById("login" + i).value = "";
         </script>
     </body>
 </html>
