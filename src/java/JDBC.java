@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +29,7 @@ public class JDBC {
 
     private ArrayList<User> messages = new ArrayList<>();
 
-    public ArrayList<User> executerTests(HttpServletRequest request) {
+    public ArrayList<User> insert(HttpServletRequest request) {
         try {
             //messages.add("Chargement du driver...");
             Class.forName("org.apache.derby.jdbc.ClientDriver");
@@ -37,7 +38,7 @@ public class JDBC {
             System.out.println("Erreur lors du chargement : le driver n'a pas été trouvé dans le classpath ! <br/>"
                     + e.getMessage());
         }
-        String url = "jdbc:derby://localhost:1527/project1";
+        String url = "jdbc:derby://localhost:1527/project1Users";
         String utilisateur = "root";
         String motDePasse = "root";
         Connection connexion = null;
@@ -95,6 +96,78 @@ public class JDBC {
                 } catch (SQLException ignore) {
                 }
             }
+            if (connexion != null) {
+                try {
+                    connexion.close();
+                } catch (SQLException ignore) {
+                }
+            }
+        }
+        return messages;
+    }
+    
+    public ArrayList<User> search(HttpServletRequest request) {
+         try {
+            //messages.add("Chargement du driver...");
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            //messages.add("Driver chargé !");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Erreur lors du chargement : le driver n'a pas été trouvé dans le classpath ! <br/>"
+                    + e.getMessage());
+        }
+        String url = "jdbc:derby://localhost:1527/project1Users";
+        String utilisateur = "root";
+        String motDePasse = "root";
+        Connection connexion = null;
+        Statement statement = null;
+        ResultSet resultat = null;
+        try {
+            //messages.add("Connexion à la base de données...");
+            connexion = DriverManager.getConnection(url, utilisateur, motDePasse);
+            /* Création de l'objet gérant les requêtes */
+            statement = connexion.createStatement();
+            // Exécution d'une requête de lecture 
+            String query = "";
+                switch(l.get(0)[0]){
+                    case "*": query = "select id,first_name, last_name, login from users where first_name='"+l.get(0)[1]+"' or last_name='"+l.get(0)[1]+"' or login='"+l.get(0)[1]+"'";break;
+                    case "first_name": query = "select id,first_name, last_name, login from users where first_name='"+l.get(0)[1]+"'";break;
+                    case "last_name": query = "select id,first_name, last_name, login from users where last_name='"+l.get(0)[1]+"'";break;
+                    case "login": query = "select id,first_name, last_name, login from users where login='"+l.get(0)[1]+"'";break;
+                        
+                }
+                resultat = statement.executeQuery(query);
+                while(resultat.next()){
+                    User u = new User();
+                    u.setId(resultat.getString("id"));
+                    u.setFirst_name(resultat.getString("first_name"));
+                    u.setLast_name(resultat.getString("last_name"));
+                    u.setLogin(resultat.getString("login"));
+                    messages.add(u);
+                }
+                
+            
+            
+            
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la connexion : <br/>"
+                    + e.getMessage());
+        } finally {
+            //messages.add("Fermeture de l'objet ResultSet.");
+            if (resultat != null) {
+                try {
+                    resultat.close();
+                } catch (SQLException ignore) {
+                }
+            }
+
+            //messages.add("Fermeture de l'objet Statement.");
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ignore) {
+                }
+            }
+            //messages.add("Fermeture de l'objet Connection.");
             if (connexion != null) {
                 try {
                     connexion.close();

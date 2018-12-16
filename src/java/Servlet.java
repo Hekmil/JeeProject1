@@ -32,13 +32,23 @@ public class Servlet extends HttpServlet {
         ArrayList<String[]> l = new ArrayList<>(); // User
         String[] tab = new String[3]; // Data
         int n = 0;
-
+        int ok=0;
         while (parameters.hasMoreElements()) {
 
             n++;
             String nomParam = (String) parameters.nextElement();
             String valeurParam = request.getParameter(nomParam);
-            if (!request.getParameter(nomParam).equals("")) {
+            if(nomParam.equals("selectSearch") || nomParam.equals("inputSearch")){
+                if (!request.getParameter(nomParam).equals("")) {
+                    if (n == 1) {
+                        tab[0] = valeurParam;
+                    } else{
+                        tab[1] = valeurParam;
+                        l.add(tab);
+                    }
+                }
+                ok=1;
+            }else{  
                 if (n == 1) {
                     tab[0] = valeurParam;
                 } else if (n == 2) {
@@ -53,8 +63,12 @@ public class Servlet extends HttpServlet {
         }
         /* Initialisation de l'objet Java et récupération des messages */
         JDBC jdbc = new JDBC(l);
-        
-        List<User> messages = jdbc.executerTests(request);
+        List<User> messages = null;
+        if(ok==0)
+            messages = jdbc.insert(request);
+        else{
+            messages = jdbc.search(request);            
+        }
         /* Enregistrement de la liste des messages dans l'objet requête */
         request.setAttribute(ATT_MESSAGES, messages);
         /* Transmission vers la page en charge de l'affichage des résultats */
