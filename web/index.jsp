@@ -15,7 +15,7 @@ and open the template in the editor.
     </head>
     <body>
 
-        <form method="post" class="form1" action="http://localhost:8080/project1/Servlet">
+        <form method="post" class="form1" action="http://localhost:8080/JeeProject1-master/Servlet">
 
             <table id="tableau1">
                 <caption><h2><b id="demo">Input new user(s)</b></h2></caption>
